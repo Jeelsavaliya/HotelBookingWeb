@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+
+
+<form method="post" asp-controller="Auth" asp-action="Login">
+    <label for="first">Username:</label>
+    <input type="text" id="first" name="Username" placeholder="Enter your Username" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+
+    <div class="wrap">
+        <button type="submit" onclick="solve()">Submit</button>
+    </div>
+</form>
+<p>
+    Not registered?
+    <a asp-controller="Auth" asp-action="Register" style="text-decoration: none;">Create an account</a>
+</p>
+    

@@ -1,0 +1,39 @@
+﻿
+@model IEnumerable<RoomTypeDto>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Photo</th>
+            <th scope="col">Name</th>
+            <th scope="col">Discription</th>
+            <th scope="col">Services</th>
+            <th scope="col">Size</th>
+            <th scope="col">Capacity</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><img src="@Url.Content(item.Photo)" style="height:80px; width:80px; border-radius:0px" /></td>
+                <td>@item.Name</td>
+                <td>@item.Discription</td>
+                <td>@item.Services</td>
+                <td>@item.Size ft.</td>
+                <td>@item.Capacity</td>
+                <td>
+                    <form asp-controller="RoomType" asp-action="RoomTypeEdit">
+                        <button class="btn btn-primary" value="">Edit</button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="RoomType" asp-action="RoomTypeDelete">
+                        <button class="btn btn-danger" value="">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
