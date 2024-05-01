@@ -4,62 +4,63 @@ using HotelBookingWeb.Utility;
 
 namespace HotelBookingWeb.Service
 {
-    public class RoomTypeService : IRoomTypeService
+    public class RoomService : IRoomService
     {
         private readonly IBaseService _baseService;
 
-        public RoomTypeService(IBaseService baseService)
+        public RoomService(IBaseService baseService)
         {
             _baseService = baseService;
         }
 
-        public async Task<ResponseDto?> CreateRoomTypesAsync(RoomTypeDto roomTypeDto)
+        public async Task<ResponseDto?> CreateRoomAsync(RoomDto roomDto)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
-                Data = roomTypeDto,
-                Url = SD.RoomTypeAPIBase + "/api/RoomTypeAPI",
+                Data = roomDto,
+                Url = SD.RoomAPIBase + "/api/RoomAPI",
                 ContentType = SD.ContentType.MultipartFormData
             });
         }
-        
-        public async Task<ResponseDto?> DeleteRoomTypesAsync(int id)
+
+        public async Task<ResponseDto?> DeleteRoomAsync(int id)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.DELETE,
-                Url = SD.RoomTypeAPIBase + "/api/RoomTypeAPI/" + id
+                Url = SD.RoomAPIBase + "/api/RoomAPI/" + id
             });
         }
 
-        public async Task<ResponseDto?> GetAllRoomTypesAsync()
+        public async Task<ResponseDto?> GetAllRoomAsync()
         {
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.RoomTypeAPIBase + "/api/RoomTypeAPI"
+                Url = SD.RoomAPIBase + "/api/RoomAPI"
             });
         }
-
-        public async Task<ResponseDto?> GetRoomTypeByIdAsync(int id)
+        public async Task<ResponseDto?> GetRoomByIdAsync(int id)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.RoomTypeAPIBase + "/api/RoomTypeAPI/" + id
+                Url = SD.RoomAPIBase + "/api/RoomAPI/" + id
             });
         }
 
-        public async Task<ResponseDto?> UpdateRoomTypesAsync(RoomTypeDto roomTypeDto)
+        public async Task<ResponseDto?> UpdateRoomAsync(RoomDto roomDto)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.PUT,
-                Data = roomTypeDto,
-                Url = SD.RoomTypeAPIBase + "/api/RoomTypeAPI",
+                Data = roomDto,
+                Url = SD.RoomAPIBase + "/api/RoomAPI",
                 ContentType = SD.ContentType.MultipartFormData
             });
         }
+
+
     }
 }

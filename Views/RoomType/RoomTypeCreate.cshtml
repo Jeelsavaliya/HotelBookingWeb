@@ -1,5 +1,69 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model RoomTypeDto
+
+<form asp-action="RoomTypeCreate" enctype="multipart/form-data">
+    <br />
+    <div class="container border p-3">
+
+        <div class="row">
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Photo</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="File" class="form-control" />
+                <span asp-validation-for="File" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;"> Name</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Discription</label>
+            </div>
+            <div class="col-10 pb-3">
+                <textarea asp-for="Discription" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Discription" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Services</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Services" class="form-control" />
+                <span asp-validation-for="Services" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Size</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Capacity</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Capacity" class="form-control" />
+                <span asp-validation-for="Capacity" class="text-danger"></span>
+            </div>
+
+            <div class="col-5 offset-2">
+                <input type="submit" value="Create New Room" class="btn btn-outline-success form-control" />
+
+            </div>
+            <div class="col-5">
+                <a asp-action="RoomTypeIndex" class="btn btn-outline-primary form-control ">Back to List</a>
+            </div>
+
+        </div>
+
+        <div>
+        </div>
+    </div>
+</form>
+
+
+@* @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} *@

@@ -1,9 +1,14 @@
+using HotelBookingWeb.Authentication;
 using HotelBookingWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace HotelBookingWeb.Controllers
 {
+
+    /*[CheckAccess]*/
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -13,6 +18,7 @@ namespace HotelBookingWeb.Controllers
             _logger = logger;
         }
 
+        
         public IActionResult Index()
         {
             return View();

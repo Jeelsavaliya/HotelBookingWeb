@@ -13,16 +13,19 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 
 
-builder.Services.AddHttpClient<IRoomTypeService, RoomTypeService>();
 builder.Services.AddHttpClient<IAuthService, AuthService>();
+builder.Services.AddHttpClient<IRoomTypeService, RoomTypeService>();
+builder.Services.AddHttpClient<IRoomService, RoomService>();
 
 SD.RoomTypeAPIBase = builder.Configuration["ServiceUrls:HotelBookingAPI"];
+SD.RoomAPIBase = builder.Configuration["ServiceUrls:HotelBookingAPI"];
 SD.AuthAPIBase = builder.Configuration["ServiceUrls:HotelBookingAPI"];
 
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddScoped<IBaseService, BaseService>();
-builder.Services.AddScoped<IRoomTypeService, RoomTypeService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IRoomTypeService, RoomTypeService>();
+builder.Services.AddScoped<IRoomService, RoomService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -47,7 +50,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

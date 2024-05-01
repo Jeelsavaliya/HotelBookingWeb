@@ -8,9 +8,11 @@ using System.Security.Claims;
 using HotelBookingWeb.Service.IService;
 using HotelBookingWeb.Models;
 using HotelBookingWeb.Utility;
+using HotelBookingWeb.Authentication;
 
 namespace HotelBookingWeb.Controllers
 {
+    
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;

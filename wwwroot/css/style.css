@@ -109,6 +109,73 @@ ol {
 }
 
 /*---------------------
+  Table
+-----------------------*/
+
+@media (max-width: 575.98px) {
+	.table-responsive-sm {
+		width: 100%;
+		overflow-x: auto;
+		margin-top: 30px;
+		-webkit-overflow-scrolling: touch;
+	}
+
+		.table-responsive-sm > .table-bordered {
+			border: 0;
+		}
+}
+
+@media (max-width: 767.98px) {
+	.table-responsive-md {
+		width: 100%;
+		overflow-x: auto;
+		margin-top: 30px;
+		-webkit-overflow-scrolling: touch;
+	}
+
+		.table-responsive-md > .table-bordered {
+			border: 0;
+		}
+}
+
+@media (max-width: 991.98px) {
+	.table-responsive-lg {
+		width: 100%;
+		overflow-x: auto;
+		margin-top: 30px;
+		-webkit-overflow-scrolling: touch;
+	}
+
+		.table-responsive-lg > .table-bordered {
+			border: 0;
+		}
+}
+
+@media (max-width: 1199.98px) {
+	.table-responsive-xl {
+		width: 100%;
+		overflow-x: auto;
+		margin-top: 30px;
+		-webkit-overflow-scrolling: touch;
+	}
+
+		.table-responsive-xl > .table-bordered {
+			border: 0;
+		}
+}
+
+.table-responsive {
+	width: 100%;
+	overflow-x: auto;
+	margin-top: 30px;
+	-webkit-overflow-scrolling: touch;
+}
+
+	.table-responsive > .table-bordered {
+		border: 0;
+	}
+
+/*---------------------
   Helper CSS
 -----------------------*/
 

@@ -3,6 +3,7 @@
     public class SD
     {
         public static string RoomTypeAPIBase { get; set; }
+        public static string RoomAPIBase { get; set; }
         public static string AuthAPIBase { get; set; }
 
        /* public static string HotelBookingAPIBase { get; set; }*/
