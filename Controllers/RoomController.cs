@@ -23,7 +23,8 @@ namespace HotelBookingWeb.Controllers
         }
 
         #region Room Index
-        
+
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> RoomIndex()
         {
             List<RoomDto>? list = new();
@@ -115,7 +116,7 @@ namespace HotelBookingWeb.Controllers
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> RoomDelete(int roomId)
         {
-            ResponseDto? response = await _roomService.GetRoomByIdAsync(roomId);
+            /*ResponseDto? response = await _roomService.GetRoomByIdAsync(roomId);
 
             if (response != null && response.IsSuccess)
             {
@@ -126,7 +127,20 @@ namespace HotelBookingWeb.Controllers
             {
                 TempData["error"] = response?.Message;
             }
-            return NotFound();
+            return NotFound();*/
+
+            ResponseDto? response = await _roomService.DeleteRoomAsync(roomId);
+
+            if (response != null && response.IsSuccess)
+            {
+                TempData["success"] = "Room deleted successfully";
+                return RedirectToAction("RoomIndex");
+            }
+            else
+            {
+                TempData["error"] = response?.Message;
+            }
+            return RedirectToAction("RoomIndex","Room");
         }
 
         [HttpPost]
@@ -199,5 +213,7 @@ namespace HotelBookingWeb.Controllers
             return View(roomDto);
         }
         #endregion
+
+       
     }
 }

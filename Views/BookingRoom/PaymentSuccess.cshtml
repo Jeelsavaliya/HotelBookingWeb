@@ -1,0 +1,84 @@
+﻿@model BookingRoomDto
+
+
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title> *@
+<style>
+   /*  body {
+        margin: 0;
+        padding: 0;
+    } */
+
+    .container {
+        background-color: #f5f5f5;
+        text-align: center;
+        font-family: Arial, sans-serif;
+        max-width: 100%;
+        margin: 0px auto;
+        background: #fff;
+        padding: 0px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .image-container {
+        position: relative;
+    }
+
+        .image-container img {
+            width: 65%;
+        }
+
+        .image-container h1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: rgba(0, 0, 0, 0.1);
+            margin: 0;
+        }
+
+    .content {
+        margin-top: 25px;
+    }
+
+        .content h2 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .content p {
+            color: #666;
+        }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        color: #fff;
+        background-color: #ff5252;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+</style>
+@* </head>
+<body> *@
+<div class="container">
+    <div class="image-container">
+        <img src="~/img/paymentsuccess.jpg" alt="Payment Success">
+        <h1>Thank You !</h1>
+    </div>
+    <div class="content">
+        <h2>Your Payment is Successful</h2>
+        <p>Thank you for your payment. An automated booking receipt will be sent to your registered email.</p>
+        @* <a href="home.html" class="back-link">Back to Home</a> *@
+        <a class="btn btn-success btn-lg" asp-controller="Home" asp-action="MyBooking">Back to Home<i class="bi bi-trash"></i></a>
+    </div>
+</div>
+@* </body>
+</html> *@

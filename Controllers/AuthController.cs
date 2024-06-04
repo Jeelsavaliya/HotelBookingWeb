@@ -24,10 +24,11 @@ namespace HotelBookingWeb.Controllers
             _tokenProvider = tokenProvider;
         }
 
+        #region Login
         [HttpGet]
         public IActionResult Login()
         {
-            LoginRequestDto loginRequestDto = new();
+            LoginRequestDto loginRequestDto = new();            
             return View(loginRequestDto);
         }
 
@@ -38,19 +39,25 @@ namespace HotelBookingWeb.Controllers
 
             if (responseDto != null && responseDto.IsSuccess)
             {
+                LoginResponseDto UserID = JsonConvert.DeserializeObject<LoginResponseDto>(Convert.ToString(responseDto.Result));
                 LoginResponseDto loginResponseDto = JsonConvert.DeserializeObject<LoginResponseDto>(Convert.ToString(responseDto.Result));
 
                 await SignInUser(loginResponseDto);
+                await SignInUser(UserID);
+
                 _tokenProvider.SetToken(loginResponseDto.Token);
+                TempData["success"] = "Login Successfully";
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                TempData["error"] = responseDto.Message;
-                return View(obj);
+                TempData["error"] = "Login Unsuccessfully....Please correct Username or Password";
+                return RedirectToAction("Login","Auth");
             }
         }
+        #endregion
 
+        #region Register
         [HttpGet]
         public IActionResult Register()
         {
@@ -97,11 +104,14 @@ namespace HotelBookingWeb.Controllers
             ViewBag.RoleList = roleList;
             return View(obj);
         }
+        #endregion
+
 
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
             _tokenProvider.ClearToken();
+            TempData["success"] = "LogOut Successful";
             return RedirectToAction("Index", "Home");
         }
 
@@ -113,7 +123,7 @@ namespace HotelBookingWeb.Controllers
 
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             identity.AddClaim(new Claim(JwtRegisteredClaimNames.Email, jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Email).Value));
-            //identity.AddClaim(new Claim(JwtRegisteredClaimNames.Sub,jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Sub).Value));
+            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Sub,jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Sub).Value));
             identity.AddClaim(new Claim(JwtRegisteredClaimNames.Name, jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Name).Value));
 
             //Identity Claims

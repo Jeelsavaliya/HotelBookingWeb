@@ -5,63 +5,65 @@
     <div class="container border p-3">
 
         <div class="row">
-            <div class="col-3">
+            <div class="col-2">
                 <label class="control-label pt-2" style="font-size:20px;">Select Type Of Room</label>
             </div>
-            <div class="col-9 pb-3">
+            <div class="col-10 pb-3">
                 <select class="form-control" asp-for="RoomTypeID" asp-items="@(new SelectList(ViewBag.RoomTypeList,"RoomTypeID","Name"))">
                     <option vlaue="">Select Types Of Room</option>
-                    <span asp-validation-for="RoomTypeID" class="text-danger">Please select Roomtype</span>
                 </select>
-                @* @Html.DropDownListFor(m => m.RoomTypeID,Model.RoomTypeList "Please select", new { @class = "form-control" }) *@
+                <span asp-validation-for="RoomTypeID" class="text-danger"></span>
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <label class="control-label pt-2" style="font-size:20px;">Room Number</label>
             </div>
-            <div class="col-9 pb-3">
+            <div class="col-10 pb-3">
                 <input asp-for="RoomNumber" class="form-control" />
                 <span asp-validation-for="RoomNumber" class="text-danger"></span>
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <label class="control-label pt-2" style="font-size:20px;">Photo</label>
             </div>
-            <div class="col-9 pb-3">
+            <div class="col-10 pb-3">
                 <input asp-for="File" class="form-control" />
+                <input asp-for="Image" hidden class="form-control" />
                 <span asp-validation-for="File" class="text-danger"></span>
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <label class="control-label pt-2" style="font-size:20px;">Status</label>
             </div>
-            <div class="col-9 pb-3">
+            <div class="col-10 pb-3">
                 <input asp-for="Status" class="form-control" />
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <label class="control-label pt-2" style="font-size:20px;">Discription</label>
             </div>
-            <div class="col-9 pb-3">
+            <div class="col-10 pb-3">
                 <textarea asp-for="Discription" class="form-control" rows="5"></textarea>
                 <span asp-validation-for="Discription" class="text-danger"></span>
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <label class="control-label pt-2" style="font-size:20px;">Capacity</label>
             </div>
-            <div class="col-9 pb-3">
+            <div class="col-10 pb-3">
                 <input asp-for="Capacity" class="form-control" />
                 <span asp-validation-for="Capacity" class="text-danger"></span>
             </div>
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Price Per Night</label>
+            </div>
+            <div class="col-10 pb-2">
+                <input asp-for="PricePerNight" class="form-control" />
+                <span asp-validation-for="PricePerNight" class="text-danger"></span>
+            </div>
 
             <div class="col-5 offset-2">
-                <input type="submit" value="Create New Type" class="btn btn-outline-success form-control" />
-
+                <input type="submit" value="Create Room" class="btn btn-outline-success form-control" />
             </div>
             <div class="col-5">
                 <a asp-action="RoomIndex" class="btn btn-outline-primary form-control ">Back to List</a>
             </div>
-
-        </div>
-
-        <div>
         </div>
     </div>
 </form>

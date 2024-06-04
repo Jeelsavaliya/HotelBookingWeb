@@ -1,0 +1,114 @@
+﻿@model IEnumerable<BookingRoomDto>
+
+<hr />
+<br />
+
+@if (TempData["error"] != null)
+{
+
+}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Booking Room List</h4>
+            <!-- <p class="card-description">
+              Add class <code>.table</code>
+            </p> -->
+            <div class="table-responsive">
+                <table class="table" id="sample_1">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Address</th>
+                            <th style ="width:150px">Email</th>
+                            <th>Phone Number</th>
+                            <th style="width:150px">Check In Time</th>
+                            <th style="width:150px">Check Out Time</th>
+                            <th>Amount</th>
+                            <th>CheckIn</th>
+                            <th>CheckOut</th>
+                            <th>Payment</th>
+                            <th style="width:400px">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sample_2">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.FirstName</td>
+                                <td>@item.LastName</td>
+                                @* <td><img src="@item.Image" style="height:80px; width:80px; border-radius:0px" /></td> *@
+                                <td>@item.Address</td>
+                                <td>@item.Email</td>
+                                <td>@item.PhoneNumber</td>
+                                <td>@item.CheckInDate</td>
+                                <td>@item.CheckOutDate</td>
+                                <td>@item.TotalPrice</td>
+                                <td><label class="badge badge-success">@item.CheckIn</td>
+                                <td><label class="badge badge-success">@item.CheckOut</td>
+                                @{
+                                    if (item.Payment == "Pending")
+                                    {
+                                        <td>
+                                            <label class="badge badge-danger">
+                                                @item.Payment
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <label class="badge badge-success">
+                                                @item.Payment
+                                        </td>
+
+                                    }
+                                }
+                                <td>
+                                    <a class="btn btn-outline-success btn-sm" asp-controller="BookingRoom" asp-action="CheckIn" asp-route-bookingRoomId="@item.BookingRoomID">Check In<i class="bi bi-trash"></i></a>
+                                    <a class="btn btn-outline-success btn-sm" asp-controller="BookingRoom" asp-action="CheckOut" asp-route-bookingRoomId="@item.BookingRoomID" asp-route-roomId="@item.RoomID">Check Out<i class="bi bi-trash"></i></a>
+                                    <a class="btn btn-outline-success btn-sm" asp-controller="BookingRoom" asp-action="PaymentStatus" asp-route-bookingRoomId="@item.BookingRoomID">Change Satus<i class="bi bi-trash"></i></a>
+                                    <a class="btn btn-outline-primary btn-sm" asp-controller="BookingRoom" asp-action="BookingRoomEdit" asp-route-bookingRoomId="@item.BookingRoomID" asp-route-roomId="@item.RoomID">Edit<i class="bi bi-trash"></i></a>
+                                    <a class="btn btn-outline-danger btn-sm" onclick="return fun1()" asp-controller="BookingRoom" asp-action="BookingRoomDelete" asp-route-bookingRoomId="@item.BookingRoomID">Delete<i class="bi bi-trash"></i></a>
+                                </td>
+                                <!--  <td><label class="badge badge-danger">Pending</label></td>
+                                </tr>
+
+                                <tr>
+                                  <td>Peter</td>
+                                  <td>53275534</td>
+                                  <td>16 May 2017</td>
+                                  <td><label class="badge badge-success">Completed</label></td>
+                                </tr> -->
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        function fun1() {
+            if (confirm("Are You Sure Want To Delete")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+}

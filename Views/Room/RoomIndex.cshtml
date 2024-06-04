@@ -2,50 +2,57 @@
 
 <hr />
 <br />
-<div class="row">
-    <div class="col-8">
-        <h3>Room List</h3>
-    </div>
-    <div class="col-4">
-        <a class="btn btn-success btn-sm" asp-controller="Room" asp-action="RoomCreate">Add Room<i class="bi bi-trash"></i></a>
-    </div>
-</div>
 
-<div class="table-responsive">
-    <table class="table table-striped" id="sample_1">
-        <thead>
-            <tr>
-                <th>Room Number</th>
-                @* <th>Room Type</th> *@
-                <th>Photo</th>
-                <th>Status</th>
-                <th>Discription</th>
-                <th>Capacity</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="sample_2">
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.RoomNumber</td>
-                    <td><img src="@item.Image" style="height:80px; width:80px; border-radius:0px" /></td>
-                    <td>@item.Status</td>
-                    <td>@item.Discription</td>
-                    <td>@item.Capacity</td>
-                    <td>
-                        <a class="btn btn-outline-primary btn-sm" asp-controller="Room" asp-action="RoomEdit" asp-route-roomId="@item.RoomID">Edit<i class="bi bi-trash"></i></a>
-                        <a class="btn btn-outline-danger btn-sm" onclick="return fun1()" asp-controller="Room" asp-action="RoomDelete" asp-route-roomId="@item.RoomID">Delete<i class="bi bi-trash"></i></a>
-                    </td>
-                    @* <td>
-                        <form method="post" asp-controller="Room" asp-action="RoomDelete" asp-route-roomId="@item.RoomID">
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8">
+                    <h3>Room List</h3>
+                </div>
+                <div class="col-4">
+                    <a class="btn btn-success btn-sm" asp-controller="Room" asp-action="RoomCreate">Add Room<i class="bi bi-trash"></i></a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table" id="sample_1">
+                    <thead>
+                        <tr>
+                            <th>Room Number</th>
+                            @* <th>Room Type</th> *@
+                            <th>Photo</th>
+                            <th>Status</th>
+                            <th>Discription</th>
+                            <th>Capacity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sample_2">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.RoomNumber</td>
+                                <td><img src="@item.Image" style="height:80px; width:80px; border-radius:0px" /></td>
+                                <td>@item.Status</td>
+                                <td>@item.Discription</td>
+                                <td>@item.Capacity</td>
+                                <td>
+                                    <a class="btn btn-outline-primary btn-sm" asp-controller="Room" asp-action="RoomEdit" asp-route-roomId="@item.RoomID">Edit<i class="bi bi-trash"></i></a>
+                                    <a class="btn btn-outline-danger btn-sm" onclick="return fun1()" asp-controller="Room" asp-action="RoomDelete" asp-route-roomId="@item.RoomID">Delete<i class="bi bi-trash"></i></a>
+                                </td>
+                                @* <td>
+                            <form method="post" asp-controller="Room" asp-action="RoomDelete" asp-route-roomId="@item.RoomID">
                             <button type="submit" class="btn btn-outline-danger btn-sm" value="Delete" onclick="return fun1()">Delete<i class="bi bi-trash"></i></button>
-                        </form>
-                    </td> *@
-                </tr>
-            }
-        </tbody>
-    </table>
+                            </form>
+                            </td> *@
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

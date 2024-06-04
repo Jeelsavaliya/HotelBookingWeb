@@ -5,9 +5,11 @@
         public static string RoomTypeAPIBase { get; set; }
         public static string RoomAPIBase { get; set; }
         public static string AuthAPIBase { get; set; }
+        public static string BookingRoomAPIBase { get; set; }
+        public static string CheckAvailabilityAPIBase { get; set; }
+        public static string EmialAPIBase { get; set; }
+        public static string PaymentOrderAPIBase { get; set; }
 
-       /* public static string HotelBookingAPIBase { get; set; }*/
-        
 
 
         public const string RoleAdmin = "ADMIN";
@@ -18,7 +20,8 @@
             GET,
             POST,
             PUT,
-            DELETE
+            DELETE, 
+            GETBYUSER
         }
         public enum ContentType
         {

@@ -90,7 +90,7 @@ namespace HotelBookingWeb.Service
                         break;
                 }
 
-                apiResponse = await client.SendAsync(message);
+                    apiResponse = await client.SendAsync(message);
 
                 switch (apiResponse.StatusCode)
                 {

@@ -3,8 +3,8 @@
 <form asp-action="RoomEdit" enctype="multipart/form-data">
     <br />
     <div class="container border p-3">
-        <input hidden asp-for="RoomID"/>
-        <input hidden asp-for="RoomTypeID"/>
+        <input hidden asp-for="RoomID" />
+        <input hidden asp-for="RoomTypeID" />
         <div class="row">
             <div class="col-2">
                 <label class="control-label pt-2" style="font-size:20px;">Select Type Of Room</label>
@@ -51,18 +51,20 @@
                 <input asp-for="Capacity" class="form-control" />
                 <span asp-validation-for="Capacity" class="text-danger"></span>
             </div>
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Price Per Night</label>
+            </div>
+            <div class="col-10 pb-2">
+                <input asp-for="PricePerNight" class="form-control" />
+                <span asp-validation-for="PricePerNight" class="text-danger"></span>
+            </div>
 
             <div class="col-5 offset-2">
-                <input type="submit" value="Create New Type" class="btn btn-outline-success form-control" />
-
+                <input type="submit" value="Update Room" class="btn btn-outline-success form-control" />
             </div>
             <div class="col-5">
                 <a asp-action="RoomIndex" class="btn btn-outline-primary form-control ">Back to List</a>
             </div>
-
-        </div>
-
-        <div>
         </div>
     </div>
 </form>

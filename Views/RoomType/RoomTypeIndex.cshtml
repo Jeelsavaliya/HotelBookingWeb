@@ -1,53 +1,65 @@
 ﻿@model IEnumerable<RoomTypeDto>
 
-<hr/>
-<br/>
-<div class="row">
-    <div class="col-8">
-        <h3>Room Type List</h3>
-    </div>
-    <div class="col-4">
-        <a class="btn btn-success btn-sm" asp-controller="RoomType" asp-action="RoomTypeCreate">Add RoomType<i class="bi bi-trash"></i></a>
-    </div>
-</div>
-    
-<div class="table-responsive">
-    <table class="table table-striped" id="sample_1">
-        <thead>
-            <tr>
-                <th>Photo</th>
-                <th>Name</th>
-                <th>Discription</th>
-                <th>Services</th>
-                <th>Size</th>
-                <th>Capacity</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="sample_2">
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td><img src="@item.Image" style="height:80px; width:80px; border-radius:0px" /></td>
-                    <td>@item.Name</td>
-                    <td>@item.Discription</td>
-                    <td>@item.Services</td>
-                    <td>@item.Size</td>
-                    <td>@item.Capacity</td>
-                    <td>
-                        <a class="btn btn-outline-primary btn-sm" asp-controller="RoomType" asp-action="RoomTypeEdit" asp-route-roomTypeId="@item.RoomTypeID">Edit<i class="bi bi-trash"></i></a>
-                        <a class="btn btn-outline-danger btn-sm" onclick="return fun1()" asp-controller="RoomType" asp-action="RoomTypeDelete" asp-route-roomTypeId="@item.RoomTypeID">Delete<i class="bi bi-trash"></i></a>
-                        
-                    </td>
-                    @* <td>
-                        <form method="post" asp-controller="RoomType" asp-action="RoomTypeDelete" asp-route-roomTypeId="@item.RoomTypeID">
+<hr />
+<br />
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-8">
+                    <h3>Room Type List</h3>
+                </div>
+                <div class="col-4">
+                    <a class="btn btn-success btn-sm" asp-controller="RoomType" asp-action="RoomTypeCreate">Add RoomType<i class="bi bi-trash"></i></a>
+                </div>
+            </div>
+            <!-- <p class="card-description">
+              Add class <code>.table</code>
+            </p> -->
+            <div class="table-responsive">
+                <table class="table" id="sample_1">
+                    <thead>
+                        <tr>
+                            <th>Photo</th>
+                            <th>Name</th>
+                            <th>Discription</th>
+                            <th>Services</th>
+                            <th>Size</th>
+                            <th>Capacity</th>
+                            <th>Price Per Night</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sample_2">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><img src="@item.Image" style="height:80px; width:80px; border-radius:0px" /></td>
+                                <td>@item.Name</td>
+                                <td>@item.Discription</td>
+                                <td>@item.Services</td>
+                                <td>@item.Size</td>
+                                <td>@item.Capacity</td>
+                                <td>@item.PricePerNight</td>
+                                <td>
+                                    <a class="btn btn-outline-primary btn-sm" asp-controller="RoomType" asp-action="RoomTypeEdit" asp-route-roomTypeId="@item.RoomTypeID">Edit<i class="bi bi-trash"></i></a>
+                                    <a class="btn btn-outline-danger btn-sm" onclick="return fun1()" asp-controller="RoomType" asp-action="RoomTypeDelete" asp-route-roomTypeId="@item.RoomTypeID">Delete<i class="bi bi-trash"></i></a>
+
+                                </td>
+                                @* <td>
+                            <form method="post" asp-controller="RoomType" asp-action="RoomTypeDelete" asp-route-roomTypeId="@item.RoomTypeID">
                             <button type="submit" class="btn btn-outline-danger btn-sm" value="Delete" onclick="return fun1()">Delete<i class="bi bi-trash"></i></button>
-                        </form>
-                    </td> *@
-                </tr>
-            }
-        </tbody>
-    </table>
+                            </form>
+                            </td> *@
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
