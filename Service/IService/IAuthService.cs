@@ -7,5 +7,7 @@ namespace HotelBookingWeb.Service.IService
         Task<ResponseDto?> LoginAsync(LoginRequestDto loginRequestDto);
         Task<ResponseDto?> RegisterAsync(RegistrationRequestDto registrationRequestDto);
         Task<ResponseDto?> AssignRoleAsync(RegistrationRequestDto registrationRequestDto);
+
+        Task<ResponseDto?> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto);
     }
 }

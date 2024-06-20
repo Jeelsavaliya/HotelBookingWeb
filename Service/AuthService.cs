@@ -22,6 +22,16 @@ namespace HotelBookingWeb.Service
             });
         }
 
+        public async Task<ResponseDto?> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
+        {
+            return await _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = SD.ApiType.POST,
+                Data = forgotPasswordDto,
+                Url = SD.AuthAPIBase + "/api/AuthAPI/forgotPassword"
+            }, withBearer: false);
+        }
+
         public async Task<ResponseDto?> LoginAsync(LoginRequestDto loginRequestDto)
         {
             return await _baseService.SendAsync(new RequestDto()

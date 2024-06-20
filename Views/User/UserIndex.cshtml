@@ -1,6 +1,4 @@
-﻿
-
-@model IEnumerable<RoomDto>
+﻿@model IEnumerable<UserDto>
 
 <hr />
 <br />
@@ -10,47 +8,39 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-6">
-                    <h3>Room List</h3>
+                <div class="col-8">
+                    <h3>User List</h3>
                 </div>
                 <div id="sample_1_filter" class="dataTables_filter col-md-2">
                     <input type="text" placeholder="Search here..." id="sample_1" />
                 </div>
-                <div class="col-4">
-                    <a class="btn btn-success btn-sm" asp-controller="Room" asp-action="RoomCreate">Add Room<i class="bi bi-trash"></i></a>
-                </div>
+               @*  <div class="col-4">
+                    <a class="btn btn-success btn-sm" asp-controller="User" asp-action="RoomCreate">Add Room<i class="bi bi-trash"></i></a>
+                </div> *@
             </div>
             <div class="table-responsive">
                 <table class="table" id="sample_1">
                     <thead>
                         <tr>
-                            <th>Room Number</th>
-                            @* <th>Room Type</th> *@
-                            <th>Photo</th>
-                            <th>Status</th>
-                            <th>Discription</th>
-                            <th>Capacity</th>
-                            <th>Action</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                           @*  <th>Action</th> *@
                         </tr>
                     </thead>
                     <tbody id="sample_2">
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.RoomNumber</td>
-                                <td><img src="@item.Image" style="height:80px; width:80px; border-radius:0px" /></td>
-                                <td>@item.Status</td>
-                                <td>@item.Discription</td>
-                                <td>@item.Capacity</td>
-                                <td>
+                                <td>@item.Name</td>                                
+                                <td>@item.Email</td>
+                                <td>@item.PhoneNumber</td>
+                                
+                               @*  <td>
                                     <a class="btn btn-outline-primary btn-sm" asp-controller="Room" asp-action="RoomEdit" asp-route-roomId="@item.RoomID">Edit<i class="bi bi-trash"></i></a>
                                     <a class="btn btn-outline-danger btn-sm" onclick="return fun1()" asp-controller="Room" asp-action="RoomDelete" asp-route-roomId="@item.RoomID">Delete<i class="bi bi-trash"></i></a>
-                                </td>
-                                @* <td>
-                            <form method="post" asp-controller="Room" asp-action="RoomDelete" asp-route-roomId="@item.RoomID">
-                            <button type="submit" class="btn btn-outline-danger btn-sm" value="Delete" onclick="return fun1()">Delete<i class="bi bi-trash"></i></button>
-                            </form>
-                            </td> *@
+                                </td> *@
+                               
                             </tr>
                         }
                     </tbody>

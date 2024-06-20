@@ -11,12 +11,13 @@ namespace HotelBookingWeb.Controllers
     {
         private readonly IRoomService _roomService;
         private readonly ICheckAvailabilityService _checkAvailabilityService;
+        private readonly IConfiguration _configuration;
 
-        public CheckAvailabilityController(ICheckAvailabilityService checkAvailabilityService, IRoomService roomService)
+        public CheckAvailabilityController(ICheckAvailabilityService checkAvailabilityService, IRoomService roomService, IConfiguration configuration)
         {
             _checkAvailabilityService = checkAvailabilityService;
             _roomService = roomService;
-
+            _configuration = configuration;
         }
 
         #region Checking Rooms
@@ -44,7 +45,8 @@ namespace HotelBookingWeb.Controllers
                         {
                             result.All(t =>
                             {
-                                t.Image = "https://localhost:7001/" + t.Image;
+                                var url = _configuration.GetSection("BaseUrl:WebUrl").Value;
+                                t.Image = url + t.Image;
                                 return true;
                             });
                         }

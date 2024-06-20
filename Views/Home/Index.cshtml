@@ -31,7 +31,12 @@
                         <p>Check Out</p>
                         <div class="filter__form__datepicker">
                             <span class="icon_calendar"></span>
-                            <input asp-for="CheckOutTime" type="text" class="datepicker_pop check__out">
+                            <input asp-for="CheckOutTime" for="weekend-date-picker" type="text" class="datepicker_pop check__out">
+                           @*  <label for="weekend-date-picker">Disable weekends:</label>
+                            @(Html.DatePicker()
+                                .Name("weekend-date-picker")
+                                .DisableDates(DayOfWeek.Saturday, DayOfWeek.Sunday)
+                                ) *@
                             <i class="arrow_carrot-down"></i>
                         </div>
                     </div>
@@ -503,3 +508,4 @@
     </div>
 </section>
 <!-- Latest Blog Section End -->
+

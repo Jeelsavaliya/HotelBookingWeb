@@ -20,15 +20,17 @@ namespace HotelBookingWeb.Controllers
         private readonly IRoomService _roomService;
         private readonly IAuthService _authService;
         private readonly IMailService _mailService;
+        private readonly IConfiguration _configuration;
         private ResponseDto _response;
 
-        public BookingRoomController(IBookingRoomService bookingRoomService, IRoomService roomService, IAuthService authService, IMailService mailService)
+        public BookingRoomController(IBookingRoomService bookingRoomService, IRoomService roomService, IAuthService authService, IMailService mailService, IConfiguration configuration)
         {
             _bookingRoomService = bookingRoomService;
             _roomService = roomService;
             _authService = authService;
             _mailService = mailService;
             _response = new ResponseDto();
+            _configuration = configuration;
         }
 
         #region BookingRoom Index
@@ -64,7 +66,12 @@ namespace HotelBookingWeb.Controllers
                 RoomDto? model = JsonConvert.DeserializeObject<RoomDto>(Convert.ToString(response.Result));
                 if (model.Status == "Unoccupied")
                 {
-                    return View();
+                    //Check user is Authenticate or not
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        return View();
+                    }
+                    return RedirectToAction("Login", "Auth");
                 }
                 else
                     return RedirectToAction("Rooms", "Home");
@@ -122,7 +129,7 @@ namespace HotelBookingWeb.Controllers
                         //Check create booking is true or not
                         if (bookingresponse != null && bookingresponse.IsSuccess)
                         {
-                            TempData["success"] = "BookingRoom created successfully";
+                            //TempData["success"] = "BookingRoom created successfully";
 
 
                             /*ResponseDto? emailresponse = await _mailService.SendMail(model, models);
@@ -330,12 +337,14 @@ namespace HotelBookingWeb.Controllers
             if (bookingroomresponse != null && bookingroomresponse.IsSuccess)
             {
                 BookingRoomDto? model = JsonConvert.DeserializeObject<BookingRoomDto>(Convert.ToString(bookingroomresponse.Result));
-                model.CheckIn = "Check In";
+                var currentTime = DateTime.Now;
+                model.CheckIn = "Check In" + " " + currentTime;
 
                 ResponseDto? updatebookingroom = await _bookingRoomService.UpdateBookingRoomAsync(model);
                 //Check room is update or not
                 if (updatebookingroom != null && updatebookingroom.IsSuccess)
                 {
+                    TempData["success"] = "Chek-In Successfully";
                     return RedirectToAction("BookingRoomIndex");
                 }
                 else
@@ -362,16 +371,13 @@ namespace HotelBookingWeb.Controllers
             if (bookingroomresponse != null && bookingroomresponse.IsSuccess)
             {
                 BookingRoomDto? model = JsonConvert.DeserializeObject<BookingRoomDto>(Convert.ToString(bookingroomresponse.Result));
-                model.CheckOut = "Check Out";
+                var currentTime = DateTime.Now;
+                model.CheckOut = "Check Out" + " " + currentTime;
 
                 ResponseDto? updatebookingroom = await _bookingRoomService.UpdateBookingRoomAsync(model);
                 //Check room is update or not
                 if (updatebookingroom != null && updatebookingroom.IsSuccess)
-                {
-
-                    TempData["success"] = "Booking Room updated successfully";
-
-
+                {             
                     ResponseDto? roomresponse = await _roomService.GetRoomByIdAsync(roomId);
 
                     //Get and check selected room is avaliable or not
@@ -385,6 +391,7 @@ namespace HotelBookingWeb.Controllers
                         //Check room is update or not
                         if (updaetroom != null && updaetroom.IsSuccess)
                         {
+                            TempData["success"] = "Chek-Out Successfully";
                             return RedirectToAction("BookingRoomIndex");
                         }
                         else
@@ -423,14 +430,14 @@ namespace HotelBookingWeb.Controllers
             if (bookingroomresponse != null && bookingroomresponse.IsSuccess)
             {
                 BookingRoomDto? model = JsonConvert.DeserializeObject<BookingRoomDto>(Convert.ToString(bookingroomresponse.Result));
-                model.Payment = "Done";
+                model.Payment = "Success";
 
                 ResponseDto? updatebookingroom = await _bookingRoomService.UpdateBookingRoomAsync(model);
                 //Check room is update or not
                 if (updatebookingroom != null && updatebookingroom.IsSuccess)
                 {
 
-                    TempData["success"] = "Booking Room updated successfully";
+                    TempData["success"] = "Payment done successfully";
                     return RedirectToAction("BookingRoomIndex");
                 }
             }
@@ -450,12 +457,14 @@ namespace HotelBookingWeb.Controllers
                 BookingRoomDto bookingRoomDto = JsonConvert.DeserializeObject<BookingRoomDto>(Convert.ToString(response.Result));
 
                 //Payment Gaytway using Stripe
-                var domain = "https://localhost:44314/";
+
+                var domain = _configuration.GetSection("BaseUrl:SiteUrl").Value;
+                
 
                 var option = new SessionCreateOptions
                 {
                     //SuccessUrl = domain + $"CheckoutPayment/BookingConfirmation",
-                    SuccessUrl = domain + $"BookingRoom/PaymentSuccess?BookingRoomID="+bookingRoomDto.BookingRoomID,
+                    SuccessUrl = domain + $"BookingRoom/PaymentSuccess?BookingRoomID=" +bookingRoomDto.BookingRoomID,
                     CancelUrl = domain + "Home/MyBooking",
                     LineItems = new List<SessionLineItemOptions>(),
                     Mode = "payment"
@@ -487,11 +496,7 @@ namespace HotelBookingWeb.Controllers
 
                 return new StatusCodeResult(303);
 
-                /*var payment = new StatusCodeResult(303);
-
-
-                if (payment != null)
-                {*/
+               
 
 
                 /*var roomId = bookingRoomDto.RoomID;
@@ -697,8 +702,8 @@ namespace HotelBookingWeb.Controllers
                                             <p><strong>First Name:</strong> {bookingRoomDto.FirstName} </p>
                                             <p><strong>Last Name:</strong> {bookingRoomDto.LastName}</p>
                                             <p><strong>Address:</strong> {bookingRoomDto.Address}</p>
-                                            <p><strong>Check-In Date:</strong> {bookingRoomDto.CheckInDate}</p>
-                                            <p><strong>Check-Out Date:</strong> {bookingRoomDto.CheckOutDate}</p>
+                                            <p><strong>Check-In Date:</strong> {bookingRoomDto.CheckInDate.ToString("dd-MM-yyyy")}</p>
+                                            <p><strong>Check-Out Date:</strong> {bookingRoomDto.CheckOutDate.ToString("dd-MM-yyyy")}</p>
                                             <p><strong>Room Price:</strong> {bookingRoomDto.TotalPrice}</p>
                                             <p><strong>Payment Status:</strong> Payment Done Successfully</p>
                                         </div>

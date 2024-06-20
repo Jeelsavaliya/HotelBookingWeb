@@ -15,11 +15,13 @@ namespace HotelBookingWeb.Controllers
     {
         private readonly IRoomService _roomService;
         private readonly IRoomTypeService _roomTypeService;
+        private readonly IConfiguration _configuration;
 
-        public RoomController(IRoomService roomService,IRoomTypeService roomTypeService)
+        public RoomController(IRoomService roomService,IRoomTypeService roomTypeService, IConfiguration configuration)
         {
             _roomService = roomService;
             _roomTypeService = roomTypeService;
+            _configuration = configuration;
         }
 
         #region Room Index
@@ -33,12 +35,15 @@ namespace HotelBookingWeb.Controllers
 
             if (response != null && response.IsSuccess)
             {
+                        
                 list = JsonConvert.DeserializeObject<List<RoomDto>>(Convert.ToString(response.Result));
                 if (list.Count() > 0)
                 {
                     list.All(t =>
                     {
-                        t.Image = "https://localhost:7001/" + t.Image;
+                        var url = _configuration.GetSection("BaseUrl:WebUrl").Value;
+                        //t.Image = "http://localhost:7001/" + t.Image;
+                        t.Image = url + t.Image;
                         return true;
                     });
                 }
@@ -191,7 +196,7 @@ namespace HotelBookingWeb.Controllers
             }
 
             return NotFound();
-        }
+        }   
 
         [HttpPost]
         public async Task<IActionResult> RoomEdit(RoomDto roomDto)
@@ -214,6 +219,10 @@ namespace HotelBookingWeb.Controllers
         }
         #endregion
 
-       
+        public async Task<IActionResult> RoomFilter()
+        {
+
+            return View();
+        }
     }
 }

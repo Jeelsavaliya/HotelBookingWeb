@@ -1,8 +1,14 @@
-﻿@model IEnumerable<RoomDto>
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<RoomDto>
 
 
 @* <a asp-controller="Home" asp-action="RoomDetails">View Details </a>
 <a asp-controller="BookingRoom" asp-action="BookingRoom">Bookin Now</a> *@
+
+<a class="btn btn-outline-info btn-sm" asp-controller="Room" asp-action="RoomEdit">Show <i class="bi bi-trash"></i></a>
 
 <section class="rooms spad">
     <div class="container">
@@ -32,6 +38,10 @@
         </div>
     </div>
 </section>
+
+
+
+
 
 @*
 

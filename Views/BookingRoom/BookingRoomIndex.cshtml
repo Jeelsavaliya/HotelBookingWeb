@@ -3,34 +3,38 @@
 <hr />
 <br />
 
-@if (TempData["error"] != null)
-{
-
+@{
+    var currentTime = DateTime.Now;
 }
+
 
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Booking Room List</h4>
-            <!-- <p class="card-description">
-              Add class <code>.table</code>
-            </p> -->
+            <div class="row">
+                <div class="col-8">
+                    <h3>Booking Room List</h3>
+                </div>
+                <div id="sample_1_filter" class="dataTables_filter col-md-2">
+                    <input type="text" placeholder="Search here..." id="sample_1" />
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table" id="sample_1">
                     <thead>
                         <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Address</th>
-                            <th style ="width:150px">Email</th>
-                            <th>Phone Number</th>
-                            <th style="width:150px">Check In Time</th>
-                            <th style="width:150px">Check Out Time</th>
-                            <th>Amount</th>
-                            <th>CheckIn</th>
-                            <th>CheckOut</th>
-                            <th>Payment</th>
-                            <th style="width:400px">Action</th>
+                            <th class="th-min-width-150">First Name</th>
+                            <th class="th-min-width-150">Last Name</th>
+                            <th class="th-min-width-150">Address</th>
+                            <th class="th-min-width-150">Email</th>
+                            <th class="th-min-width-150">Phone Number</th>
+                            <th class="th-min-width-150">Check In Time</th>
+                            <th class="th-min-width-150">Check Out Time</th>
+                            <th class="th-min-width-150">Amount</th>
+                            <th class="th-min-width-150">CheckIn</th>
+                            <th class="th-min-width-150">CheckOut</th>
+                            <th class="th-min-width-150">Payment</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="sample_2">
@@ -39,48 +43,49 @@
                             <tr>
                                 <td>@item.FirstName</td>
                                 <td>@item.LastName</td>
-                                @* <td><img src="@item.Image" style="height:80px; width:80px; border-radius:0px" /></td> *@
                                 <td>@item.Address</td>
                                 <td>@item.Email</td>
                                 <td>@item.PhoneNumber</td>
-                                <td>@item.CheckInDate</td>
-                                <td>@item.CheckOutDate</td>
+                                <td>@item.CheckInDate.ToString("dd-MM-yyyy")</td>
+                                <td>@item.CheckOutDate.ToString("dd-MM-yyyy")</td>
                                 <td>@item.TotalPrice</td>
-                                <td><label class="badge badge-success">@item.CheckIn</td>
-                                <td><label class="badge badge-success">@item.CheckOut</td>
-                                @{
-                                    if (item.Payment == "Pending")
+                                <td>
+                                    @if (item.CheckIn == null)
                                     {
-                                        <td>
-                                            <label class="badge badge-danger">
-                                                @item.Payment
-                                        </td>
+                                        <a class="btn btn-outline-dark btn-sm mr-1" asp-controller="BookingRoom" asp-action="CheckIn" asp-route-bookingRoomId="@item.BookingRoomID">Check In</a>
                                     }
                                     else
                                     {
-                                        <td>
-                                            <label class="badge badge-success">
-                                                @item.Payment
-                                        </td>
-
+                                        <span class="badge badge-info">@item.CheckIn</span>
                                     }
-                                }
-                                <td>
-                                    <a class="btn btn-outline-success btn-sm" asp-controller="BookingRoom" asp-action="CheckIn" asp-route-bookingRoomId="@item.BookingRoomID">Check In<i class="bi bi-trash"></i></a>
-                                    <a class="btn btn-outline-success btn-sm" asp-controller="BookingRoom" asp-action="CheckOut" asp-route-bookingRoomId="@item.BookingRoomID" asp-route-roomId="@item.RoomID">Check Out<i class="bi bi-trash"></i></a>
-                                    <a class="btn btn-outline-success btn-sm" asp-controller="BookingRoom" asp-action="PaymentStatus" asp-route-bookingRoomId="@item.BookingRoomID">Change Satus<i class="bi bi-trash"></i></a>
-                                    <a class="btn btn-outline-primary btn-sm" asp-controller="BookingRoom" asp-action="BookingRoomEdit" asp-route-bookingRoomId="@item.BookingRoomID" asp-route-roomId="@item.RoomID">Edit<i class="bi bi-trash"></i></a>
-                                    <a class="btn btn-outline-danger btn-sm" onclick="return fun1()" asp-controller="BookingRoom" asp-action="BookingRoomDelete" asp-route-bookingRoomId="@item.BookingRoomID">Delete<i class="bi bi-trash"></i></a>
                                 </td>
-                                <!--  <td><label class="badge badge-danger">Pending</label></td>
-                                </tr>
 
-                                <tr>
-                                  <td>Peter</td>
-                                  <td>53275534</td>
-                                  <td>16 May 2017</td>
-                                  <td><label class="badge badge-success">Completed</label></td>
-                                </tr> -->
+                                <td>
+                                    @if (item.CheckOut == null && item.CheckIn != null)
+                                    {
+                                        <a class="btn btn-outline-dark btn-sm mr-1" asp-controller="BookingRoom" asp-action="CheckOut" asp-route-bookingRoomId="@item.BookingRoomID" asp-route-roomId="@item.RoomID">Check Out</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-info">@item.CheckOut</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (item.Payment != "Success")
+                                    {
+                                        <a class="btn btn-outline-danger btn-sm mr-1" asp-controller="BookingRoom" asp-action="PaymentStatus" asp-route-bookingRoomId="@item.BookingRoomID">Change Satus</a>
+                                    }
+                                    else
+                                    {
+                                    <span class="badge badge-success">@item.Payment</span>
+                                    }
+                                </td>
+
+                                <td class="d-flex">
+                                    <a class="btn btn-outline-primary btn-sm mr-1" asp-controller="BookingRoom" asp-action="BookingRoomEdit" asp-route-bookingRoomId="@item.BookingRoomID" asp-route-roomId="@item.RoomID">Edit</a>
+                                    <a class="btn btn-outline-danger btn-sm mr-1" onclick="return fun1()" asp-controller="BookingRoom" asp-action="BookingRoomDelete" asp-route-bookingRoomId="@item.BookingRoomID">Delete</a>
+                                </td>
                             </tr>
                         }
 

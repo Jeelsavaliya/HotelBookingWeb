@@ -24,12 +24,14 @@ namespace HotelBookingWeb.Controllers
 		private readonly ILogger<HomeController> _logger;
 		private readonly IRoomService _roomService;
 		private readonly IBookingRoomService _bookingRoomService;
+		private readonly IConfiguration _configuration;
 
-		public HomeController(ILogger<HomeController> logger, IRoomService roomService, IBookingRoomService bookingRoomService)
+		public HomeController(ILogger<HomeController> logger, IRoomService roomService, IBookingRoomService bookingRoomService, IConfiguration configuration)
 		{
 			_logger = logger;
 			_roomService = roomService;
 			_bookingRoomService = bookingRoomService;
+			_configuration = configuration;
 		}
 
 
@@ -46,16 +48,18 @@ namespace HotelBookingWeb.Controllers
 
 			if (response != null && response.IsSuccess)
 			{
-				list = JsonConvert.DeserializeObject<List<RoomDto>>(Convert.ToString(response.Result));
-				if (list.Count() > 0)
-				{
-					list.All(t =>
-					{
-						t.Image = "https://localhost:7001/" + t.Image;
-						return true;
-					});
-				}
-			}
+                list = JsonConvert.DeserializeObject<List<RoomDto>>(Convert.ToString(response.Result));
+                if (list.Count() > 0)
+                {
+                    list.All(t =>
+                    {
+                        var url = _configuration.GetSection("BaseUrl:WebUrl").Value;
+                        //t.Image = "http://localhost:7001/" + t.Image;
+                        t.Image = url + t.Image;
+                        return true;
+                    });
+                }
+            }
 			else
 			{
 				TempData["error"] = response?.Message;

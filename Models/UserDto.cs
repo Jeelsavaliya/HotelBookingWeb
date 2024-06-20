@@ -1,4 +1,6 @@
-﻿namespace HotelBookingWeb.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace HotelBookingWeb.Models
 {
     public class UserDto
     {

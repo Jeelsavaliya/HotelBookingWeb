@@ -11,9 +11,12 @@ namespace HotelBookingWeb.Controllers
     public class RoomTypeController : Controller
     {
         private readonly IRoomTypeService _roomTypeService;
-        public RoomTypeController(IRoomTypeService roomTypeService)
+        private readonly IConfiguration _configuration;
+
+        public RoomTypeController(IRoomTypeService roomTypeService,IConfiguration configuration)
         {
             _roomTypeService = roomTypeService;
+            _configuration = configuration;
         }
 
         #region Room Type Index
@@ -30,7 +33,10 @@ namespace HotelBookingWeb.Controllers
                 {
                     list.All(t =>
                     {
-                        t.Image = "https://localhost:7001/" + t.Image;
+                        var url = _configuration.GetSection("BaseUrl:WebUrl").Value;
+                        //var url = _configuration.GetSection("ServiceUrls:WebUrl").Value;
+
+                        t.Image = url + t.Image;
                         return true;
                     });
                 }
@@ -148,7 +154,7 @@ namespace HotelBookingWeb.Controllers
 
         [HttpPost]
         public async Task<IActionResult> RoomTypeEdit(RoomTypeDto roomTypeDto)
-            {
+        {
             if (ModelState.IsValid)
             {
                 ResponseDto? response = await _roomTypeService.UpdateRoomTypesAsync(roomTypeDto);

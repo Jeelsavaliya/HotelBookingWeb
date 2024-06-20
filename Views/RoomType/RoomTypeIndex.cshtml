@@ -1,4 +1,6 @@
-﻿@model IEnumerable<RoomTypeDto>
+﻿
+
+@model IEnumerable<RoomTypeDto>
 
 <hr />
 <br />
@@ -11,7 +13,10 @@
                 <div class="col-8">
                     <h3>Room Type List</h3>
                 </div>
-                <div class="col-4">
+                <div id="sample_1_filter" class="dataTables_filter col-md-2">
+                    <input type="text" placeholder="Search here..." id="sample_1" />
+                </div>
+                <div class="col-2">
                     <a class="btn btn-success btn-sm" asp-controller="RoomType" asp-action="RoomTypeCreate">Add RoomType<i class="bi bi-trash"></i></a>
                 </div>
             </div>

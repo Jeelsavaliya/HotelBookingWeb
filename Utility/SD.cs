@@ -8,7 +8,7 @@
         public static string BookingRoomAPIBase { get; set; }
         public static string CheckAvailabilityAPIBase { get; set; }
         public static string EmialAPIBase { get; set; }
-        public static string PaymentOrderAPIBase { get; set; }
+        public static string UserAPIBase { get; set; }
 
 
 

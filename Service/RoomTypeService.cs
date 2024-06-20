@@ -57,7 +57,7 @@ namespace HotelBookingWeb.Service
             {
                 ApiType = SD.ApiType.PUT,
                 Data = roomTypeDto,
-                Url = SD.RoomTypeAPIBase + "/api/RoomTypeAPI",
+                Url = SD.RoomTypeAPIBase + $"/api/RoomTypeAPI/{roomTypeDto.RoomTypeID} ",
                 ContentType = SD.ContentType.MultipartFormData
             });
         }
