@@ -1,7 +1,20 @@
-﻿
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
 
 @model IEnumerable<RoomTypeDto>
 
+<div class="row">
+    <div class="col-8">
+        <h3>Room Type List</h3>
+    </div>
+    <div id="sample_1_filter" class="dataTables_filter col-md-2">
+        <input type="text" placeholder="Search here..." id="sample_1" style="margin-left: -115px;"S />
+    </div>
+    <div class="col-2">
+        <a class="btn btn-success btn-sm" asp-controller="RoomType" asp-action="RoomTypeCreate">Add RoomType<i class="bi bi-trash"></i></a>
+    </div>
+</div>
 <hr />
 <br />
 
@@ -9,7 +22,7 @@
     <div class="card">
         <div class="card-body">
 
-            <div class="row">
+           @*  <div class="row">
                 <div class="col-8">
                     <h3>Room Type List</h3>
                 </div>
@@ -19,7 +32,7 @@
                 <div class="col-2">
                     <a class="btn btn-success btn-sm" asp-controller="RoomType" asp-action="RoomTypeCreate">Add RoomType<i class="bi bi-trash"></i></a>
                 </div>
-            </div>
+            </div> *@
             <!-- <p class="card-description">
               Add class <code>.table</code>
             </p> -->

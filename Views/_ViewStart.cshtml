@@ -1,3 +1,23 @@
-﻿@{
+﻿@* @{
     Layout = "_Layout";
 }
+ *@
+
+
+ @* For Saperate USer and admin Layouts *@
+
+ @using HotelBookingWeb.Utility
+
+@{
+    if (this.User.IsInRole(SD.RoleCustomer) || !this.User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    }
+}
+
+
+
