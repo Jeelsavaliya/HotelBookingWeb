@@ -13,17 +13,17 @@ namespace HotelBookingWeb.Service
             _baseService = baseService;
         }
 
-        public async Task<ResponseDto?> CreateRoomTypesAsync(RoomTypeDto productDto)
+        public async Task<ResponseDto?> CreateRoomTypesAsync(RoomTypeDto roomTypeDto)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
-                Data = productDto,
+                Data = roomTypeDto,
                 Url = SD.RoomTypeAPIBase + "/api/RoomTypeAPI",
                 ContentType = SD.ContentType.MultipartFormData
             });
         }
-
+        
         public async Task<ResponseDto?> DeleteRoomTypesAsync(int id)
         {
             return await _baseService.SendAsync(new RequestDto()
@@ -51,13 +51,13 @@ namespace HotelBookingWeb.Service
             });
         }
 
-        public async Task<ResponseDto?> UpdateRoomTypesAsync(RoomTypeDto productDto)
+        public async Task<ResponseDto?> UpdateRoomTypesAsync(RoomTypeDto roomTypeDto)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.PUT,
-                Data = productDto,
-                Url = SD.RoomTypeAPIBase + "/api/RoomTypeAPI",
+                Data = roomTypeDto,
+                Url = SD.RoomTypeAPIBase + $"/api/RoomTypeAPI/{roomTypeDto.RoomTypeID} ",
                 ContentType = SD.ContentType.MultipartFormData
             });
         }

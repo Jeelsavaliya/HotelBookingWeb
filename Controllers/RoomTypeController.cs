@@ -1,19 +1,25 @@
-﻿using HotelBookingWeb.Models;
+﻿using HotelBookingWeb.Authentication;
+using HotelBookingWeb.Models;
 using HotelBookingWeb.Service.IService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace HotelBookingWeb.Controllers
 {
+    [CheckAccess]
     public class RoomTypeController : Controller
     {
         private readonly IRoomTypeService _roomTypeService;
-        public RoomTypeController(IRoomTypeService roomTypeService)
+        private readonly IConfiguration _configuration;
+
+        public RoomTypeController(IRoomTypeService roomTypeService,IConfiguration configuration)
         {
             _roomTypeService = roomTypeService;
+            _configuration = configuration;
         }
 
-
+        #region Room Type Index
         public async Task<IActionResult> RoomTypeIndex()
         {
             List<RoomTypeDto>? list = new();
@@ -23,6 +29,17 @@ namespace HotelBookingWeb.Controllers
             if (response != null && response.IsSuccess)
             {
                 list = JsonConvert.DeserializeObject<List<RoomTypeDto>>(Convert.ToString(response.Result));
+                if (list.Count() > 0)
+                {
+                    list.All(t =>
+                    {
+                        var url = _configuration.GetSection("BaseUrl:WebUrl").Value;
+                        //var url = _configuration.GetSection("ServiceUrls:WebUrl").Value;
+
+                        t.Image = url + t.Image;
+                        return true;
+                    });
+                }
             }
             else
             {
@@ -31,7 +48,11 @@ namespace HotelBookingWeb.Controllers
 
             return View(list);
         }
+        #endregion
 
+        #region Create Room Type
+        [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> RoomTypeCreate()
         {
             return View();
@@ -47,7 +68,7 @@ namespace HotelBookingWeb.Controllers
                 if (response != null && response.IsSuccess)
                 {
                     TempData["success"] = "RoomType created successfully";
-                    return RedirectToAction(nameof(RoomTypeIndex));
+                    return RedirectToAction("RoomTypeIndex");
                 }
                 else
                 {
@@ -56,10 +77,31 @@ namespace HotelBookingWeb.Controllers
             }
             return View(model);
         }
+        #endregion
 
+        #region Delete Room Type
+        [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> RoomTypeDelete(int roomTypeId)
         {
-            ResponseDto? response = await _roomTypeService.GetRoomTypeByIdAsync(roomTypeId);
+
+            //Delete Type on Index Page (not rendering delete view page)
+            ResponseDto? response = await _roomTypeService.DeleteRoomTypesAsync(roomTypeId);
+
+            if (response != null && response.IsSuccess)
+            {
+                TempData["success"] = "RoomType deleted successfully";
+                return RedirectToAction("RoomTypeIndex");
+            }
+            else
+            {
+                TempData["error"] = response?.Message;
+            }
+            /*return View(roomTypeDto);*/
+
+
+            //Delete Type on selecte ID and go perticuler delete page
+            /*ResponseDto? response = await _roomTypeService.GetRoomTypeByIdAsync(roomTypeId);
 
             if (response != null && response.IsSuccess)
             {
@@ -69,7 +111,7 @@ namespace HotelBookingWeb.Controllers
             else
             {
                 TempData["error"] = response?.Message;
-            }
+            }*/
             return NotFound();
         }
 
@@ -81,7 +123,7 @@ namespace HotelBookingWeb.Controllers
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "RoomType deleted successfully";
-                return RedirectToAction(nameof(RoomTypeIndex));
+                return RedirectToAction("RoomTypeIndex");
             }
             else
             {
@@ -89,7 +131,11 @@ namespace HotelBookingWeb.Controllers
             }
             return View(roomTypeDto);
         }
+        #endregion
 
+        #region Update Room Type
+        [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> RoomTypeEdit(int roomTypeId)
         {
             ResponseDto? response = await _roomTypeService.GetRoomTypeByIdAsync(roomTypeId);
@@ -116,7 +162,7 @@ namespace HotelBookingWeb.Controllers
                 if (response != null && response.IsSuccess)
                 {
                     TempData["success"] = "RoomType updated successfully";
-                    return RedirectToAction(nameof(RoomTypeIndex));
+                    return RedirectToAction("RoomTypeIndex");
                 }
                 else
                 {
@@ -125,5 +171,6 @@ namespace HotelBookingWeb.Controllers
             }
             return View(roomTypeDto);
         }
+        #endregion
     }
 }

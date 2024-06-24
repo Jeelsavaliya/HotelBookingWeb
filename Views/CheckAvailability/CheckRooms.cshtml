@@ -1,0 +1,30 @@
+﻿@model IEnumerable<RoomDto>
+
+<section class="rooms spad">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-6 p-0 order-lg-2 order-md-2 col-md-6">
+                    <img src="@item.Image" class="room__pic__item set-bg">
+                    <div class="col-lg-6 p-0 order-lg-1 order-md-1 col-md-6">
+                        <div class="room__text">
+                            <h3>@item.RoomNumber</h3>
+                            @* <h2><sup>$</sup>@item.PricePerNight<span>/day</span></h2> *@
+                            <ul>
+                                <li><span>Capacity:</span>@item.Capacity</li>
+                                @* <li><span>Capacity:</span>Max persion 3</li>
+                            <li><span>Bed:</span>King Beds</li> *@
+                                <li><span>Status:</span>@item.Status</li>
+                                <li><span>Description:</span>@item.Discription</li>
+                                @* <li><span>View:</span>Sea View</li> *@
+                            </ul>
+                            <a asp-controller="Home" asp-action="RoomDetails" asp-route-roomId="@item.RoomID">View Details</a>
+                            <a asp-controller="BookingRoom" asp-action="BookingRoom" asp-route-roomId="@item.RoomID">Bookin Now</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

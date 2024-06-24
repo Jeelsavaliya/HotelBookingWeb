@@ -1,0 +1,51 @@
+﻿@model IEnumerable<BookingRoomDto>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+<br />
+<div class="row row-cols-1 row-cols-md-3 g-4" style="margin: 15px">
+
+        @foreach (var item in Model)
+        {
+            <div class="col mt-2">
+                <div class="card">
+                    @* <img src="..." class="card-img-top" alt="..."> *@
+                    <div class="card-body">
+                        <h5 class="card-title">Your Room Detail</h5>
+                        <p class="card-text"><strong>Your Room Number :</strong> @item.RoomNumber </p>
+                        <p class="card-text"><strong>Your Room Capacity :</strong> @item.Capacity</p><br />
+                    
+
+                        <h5 class="card-title">Booking Person Detail</h5>
+                        <p><strong>First Name:</strong> @item.FirstName </p>
+                        <p><strong>Last Name:</strong> @item.LastName</p>
+                        <p><strong>Address:</strong> @item.Address</p>
+                        <p><strong>Check-In Date:</strong> @item.CheckInDate</p>
+                        <p><strong>Check-Out Date:</strong> @item.CheckOutDate</p>
+                        <p><strong>Room Price:</strong> @item.TotalPrice</p>
+                        <br />
+                        @if (item.Payment == "Pending")
+                        {
+                            <a class="btn btn-primary gbtn-lg" asp-controller="BookingRoom" asp-action="CheckoutPayment" asp-route-bookingroomId="@item.BookingRoomID">Continue Payment<i class="bi bi-trash"></i></a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-primary gbtn-lg" asp-controller="BookingRoom" asp-action="GeneratePDF" asp-route-bookingroomId="@item.BookingRoomID">Generate Booking PDF<i class="bi bi-trash"></i></a>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+  
+</div>
+
+@* <script type="text/javascript">
+    $("#btnGenerate").click(function () {
+        var html = $("#divMainBody").html();
+        html = html.replace(/</g, "start").replace(/>/g, "end");
+        window.open("/BookingRoom/GeneratePdf?html=" + html, "_blank");
+    });
+</script> *@
+

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<BookingRoomDto>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: black;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+            .content p {
+                margin: 10px 0;
+            }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>
+            <h1>Booking Confirmation</h1>
+        </div>
+        <div class='content'>
+            <p>Thank you for booking a room in our hotel.</p>
+            <p>Your room has been booked successfully. Below are your booking details:</p><br />
+            <p><strong>Your Room Detail:</p>
+            <p><strong>Your Room Number : {roomDto.RoomNumber }</p>
+            <p><strong>Your Room Capacity : {roomDto.Capacity}</p><br />
+            <p><strong>Booking Person Detail:</p>
+            <p><strong>First Name:</strong> {bookingRoomDto.FirstName} </p>
+            <p><strong>Last Name:</strong> {bookingRoomDto.LastName}</p>
+            <p><strong>Address:</strong> {bookingRoomDto.Address}</p>
+            <p><strong>Check-In Date:</strong> {bookingRoomDto.CheckInDate}</p>
+            <p><strong>Check-Out Date:</strong> {bookingRoomDto.CheckOutDate}</p>
+            <p><strong>Room Price:</strong> {bookingRoomDto.TotalPrice}</p>
+            <p><strong>Payment Status:</strong> Payment Done Successfully</p>
+        </div>
+    </div>
+</body>
+</html> 

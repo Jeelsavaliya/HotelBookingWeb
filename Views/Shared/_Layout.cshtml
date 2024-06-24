@@ -1,4 +1,6 @@
 ﻿@using HotelBookingWeb.Utility
+@using System.IdentityModel.Tokens.Jwt
+
 
 
 <!DOCTYPE html>
@@ -21,6 +23,8 @@
     <link rel="stylesheet" href="~/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="~/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="~/css/style.css" type="text/css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+
 </head>
 
 <body>
@@ -45,15 +49,15 @@
                 <li><span class="icon_phone"></span> (123) 456-78-910</li>
             </ul>
         </div>
-        <div class="offcanvas__language">
-            <img src="img/lan.png" alt="">
-            <span>English</span>
-            <i class="fa fa-angle-down"></i>
-            <ul>
-                <li>English</li>
-                <li>Bangla</li>
-            </ul>
-        </div>
+        @* <div class="offcanvas__language">
+        <img src="img/lan.png" alt="">
+        <span>English</span>
+        <i class="fa fa-angle-down"></i>
+        <ul>
+        <li>English</li>
+        <li>Bangla</li>
+        </ul>
+        </div> *@
         <div class="offcanvas__auth">
             <ul>
                 <li><a href="#">Login</a></li>
@@ -84,24 +88,30 @@
                                     }
                                     else
                                     {
-                                        if (User.IsInRole(SD.RoleAdmin))
+                                        @* if (User.IsInRole(SD.RoleAdmin))
+                                    {
+                                    <li><a asp-controller="RoomType" asp-action="RoomTypeIndex">Room Types</a></li>
+                                    <li><a asp-controller="Room" asp-action="RoomIndex">Room</a></li>
+                                    <li><a asp-controller="BookingRoom" asp-action="BookingRoomIndex">BookingRoom</a></li>
+                                    <li><a asp-controller="User" asp-action="UserIndex">User</a></li>
+                                    } *@
+                                        if (User.IsInRole(SD.RoleCustomer))
                                         {
-                                            <li><a asp-controller="RoomType" asp-action="RoomTypeIndex">Room Types</a></li>
-                                            <li><a asp-controller="Room" asp-action="RoomIndex">Room</a></li>
+                                            <li><a asp-controller="Auth" asp-action="Logout">Log Out</a></li>
+                                            <li><a asp-controller="User" asp-action="UserProfile">Profile</a></li>
                                         }
-                                        <li><a asp-controller="Auth" asp-action="Logout">Log Out</a></li>
                                     }
                                 </ul>
                             </div>
-                            <div class="header__top__language">
-                                <img src="img/lan.png" alt="">
-                                <span>English</span>
-                                <i class="fa fa-angle-down"></i>
-                                <ul>
-                                    <li>English</li>
-                                    <li>Gujrati</li>
-                                </ul>
-                            </div>
+                            @* <div class="header__top__language">
+                            <img src="img/lan.png" alt="">
+                            <span>English</span>
+                            <i class="fa fa-angle-down"></i>
+                            <ul>
+                            <li>English</li>
+                            <li>Gujrati</li>
+                            </ul>
+                            </div> *@
                         </div>
                     </div>
                 </div>
@@ -113,33 +123,39 @@
             <div class="header__nav__option">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-2">
+                        <div class="col-lg-1">
                             <div class="header__logo">
                                 <a href="~/index.html"><img src="img/logo.png" alt=""></a>
                             </div>
                         </div>
-                        <div class="col-lg-10">
+                        <div class="col-lg-11">
                             <div class="header__nav">
                                 <nav class="header__menu">
                                     <ul class="menu__class">
-                                        <li class="active"><a href="~/index.html">Home</a></li>
-                                        <li><a href="./rooms.html">Rooms</a></li>
-                                        <li><a href="./about.html">About Us</a></li>
-                                        <li>
-                                            <a href="#">Pages</a>
-                                            <ul class="dropdown">
-                                                <li><a href="./about.html">About Us</a></li>
-                                                <li><a href="./room-details.html">Room Details</a></li>
-                                                <li><a href="./blog-details.html">Blog Details</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="./blog.html">News</a></li>
-                                        <li><a href="./contact.html">Contact</a></li>
+                                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                        <li><a asp-controller="Home" asp-action="Rooms">Rooms</a></li>
+                                        <li><a asp-controller="Home" asp-action="AboutUs">About Us</a></li>
+                                        <li><a asp-controller="Home" asp-action="RoomDetails">Room Details</a></li>
+                                        <li><a asp-controller="Home" asp-action="Blogs">Blogs</a></li>
+                                        <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
                                     </ul>
                                 </nav>
-                                <div class="header__nav__widget">
-                                    <a href="#">Book Now <span class="arrow_right"></span></a>
-                                </div>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    @* string userId = "";
+                            if (User.IsInRole(SD.RoleCustomer))
+                            {
+                            userId = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Sub)?.FirstOrDefault()?.Value;
+                            }
+
+                            var UserId = Convert.ToInt32(userId); *@
+
+                                    <div class="header__nav__widget">
+                                        <a asp-controller="Home" asp-action="MyBooking">Booking Details</a>
+                                    </div>
+
+
+                                }
                             </div>
                         </div>
                     </div>
@@ -152,10 +168,13 @@
     </header>
     <!-- Header Section End -->
     @RenderBody()
+    <partial name="_Notifications" />
 
     <!-- Footer Section Begin -->
-    <footer class="footer set-bg" data-setbg="img/footer-bg.jpg" style="background-image: url(&quot;img/footer-bg.jpg&quot;);">
-        @* <div class="container">
+    @if (!User.IsInRole(SD.RoleAdmin))
+    {
+        <footer class="footer set-bg" data-setbg="/img/footer-bg.jpg" @* style="background-image: url("/img/footer-bg.jpg");" *@>
+            @* <div class="container">
         <div class="row">
         <div class="col-lg-12">
         <div class="logo__carousel owl-carousel">
@@ -180,9 +199,8 @@
         </div> *@
 
 
-        <div class="container">
-            @if (!User.IsInRole(SD.RoleAdmin))
-            {
+            <div class="container">
+
                 <div class="footer__content">
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-6">
@@ -190,9 +208,9 @@
                                 <div class="footer__logo">
                                     <a href="#"><img src="~/img/logo.png" alt=""></a>
                                 </div>
-                                <h4>(123) 456-78-91096</h4>
+                                <h4>077979 77977</h4>
                                 <ul>
-                                    <li>Ernser Vista Suite 437, NY</li>
+                                    <li>201, Isquare Corporate Park, Science City Rd, Science City,  <br />Panchamrut Bunglows II, Sola, Ahmedabad, Gujarat 380060</li>
                                     <li>Info.colorlib@gmail.com</li>
                                 </ul>
                                 <div class="footer__social">
@@ -207,19 +225,22 @@
                             <div class="footer__widget">
                                 <h4>Quick Link</h4>
                                 <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">Booking</a></li>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Review</a></li>
-                                    <li><a href="#">Contact</a></li>
+                                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                    <li><a asp-controller="Home" asp-action="Rooms">Rooms</a></li>
+                                    <li><a asp-controller="Home" asp-action="AboutUs">About Us</a></li>
                                 </ul>
                                 <ul>
-                                    <li><a href="#">Services</a></li>
-                                    <li><a href="#">Our Room</a></li>
-                                    <li><a href="#">Restaurants</a></li>
-                                    <li><a href="#">Payments</a></li>
-                                    <li><a href="#">Events</a></li>
+                                    <li><a asp-controller="Home" asp-action="RoomDetails">Room Details</a></li>
+                                    <li><a asp-controller="Home" asp-action="Blogs">Blog</a></li>
+                                    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
                                 </ul>
+                                @* <ul>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Our Room</a></li>
+                            <li><a href="#">Restaurants</a></li>
+                            <li><a href="#">Payments</a></li>
+                            <li><a href="#">Events</a></li>
+                            </ul> *@
                             </div>
                         </div>
                         <div class="col-lg-5 col-md-8 col-sm-12">
@@ -242,26 +263,26 @@
                         </div>
                     </div>
                 </div>
-            }
-            <div class="footer__copyright">
-                <div class="row">
-                    <div class="col-lg-7 col-md-7">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <div class="footer__copyright__text">
-                            <p>Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Jeel Savaliya</a></p>
+                <div class="footer__copyright">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-7">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            <div class="footer__copyright__text">
+                                <p>Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Jeel Savaliya</a></p>
+                            </div>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </div>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </div>
-                    <div class="col-lg-5 col-md-5">
-                        <ul class="footer__copyright__links">
-                            <li><a href="#">Terms Of Use</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                        </ul>
+                        <div class="col-lg-5 col-md-5">
+                            <ul class="footer__copyright__links">
+                                <li><a href="#">Terms Of Use</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+    }
     <!-- Footer Section End -->
     <!-- Js Plugins -->
     <script src="~/js/jquery-3.3.1.min.js"></script>
@@ -271,6 +292,7 @@
     <script src="~/js/jquery.slicknav.js"></script>
     <script src="~/js/owl.carousel.min.js"></script>
     <script src="~/js/main.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 

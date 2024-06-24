@@ -1,0 +1,73 @@
+﻿@model IEnumerable<UserDto>
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>User List</h3>
+    </div>
+    <div id="sample_1_filter" class="dataTables_filter col-md-2">
+        <input type="text" placeholder="Search here..." id="sample_1" style="margin-left: -115px;" />
+    </div>
+   
+</div>
+<hr />
+<br />
+
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table class="table" id="sample_1">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            @*  <th>Action</th> *@
+                        </tr>
+                    </thead>
+                    <tbody id="sample_2">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Email</td>
+                                <td>@item.PhoneNumber</td>
+
+                                @*  <td>
+                            <a class="btn btn-outline-primary btn-sm" asp-controller="Room" asp-action="RoomEdit" asp-route-roomId="@item.RoomID">Edit<i class="bi bi-trash"></i></a>
+                            <a class="btn btn-outline-danger btn-sm" onclick="return fun1()" asp-controller="Room" asp-action="RoomDelete" asp-route-roomId="@item.RoomID">Delete<i class="bi bi-trash"></i></a>
+                            </td> *@
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        function fun1() {
+            if (confirm("Are You Sure Want To Delete")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+}
